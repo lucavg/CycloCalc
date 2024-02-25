@@ -1,0 +1,24 @@
+﻿@page "/weather"
+@using CycloCalc.Data;
+@rendermode InteractiveServer
+
+<PageTitle>Weather</PageTitle>
+
+<h1>Weather</h1>
+
+<p>This component demonstrates showing data.</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <!-- This page is rendered in SSR mode, so the FluentDataGrid component does not offer any interactivity (like sorting). -->
+    <FluentDataGrid Id="weathergrid" Items="@forecasts" GridTemplateColumns="1fr 1fr 1fr 2fr" TGridItem="WeatherForecast" >
+        <PropertyColumn Title="Date" Property="@(c => c!.Date)" Align="Align.Start" Sortable="true"/>
+        <PropertyColumn Title="Temp. (C)" Property="@(c => c!.TemperatureC)" Align="Align.Center" Sortable="true" />
+        <PropertyColumn Title="Temp. (F)" Property="@(c => c!.TemperatureF)" Align="Align.Center" Sortable="true" />
+        <PropertyColumn Title="Summary" Property="@(c => c!.Summary)" Align="Align.End" Sortable="true" />
+    </FluentDataGrid>
+}
